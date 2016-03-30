@@ -17,6 +17,17 @@ app.use(express.static('../client'));       // sit and waits for requests
 
 app.use(bodyParser.json());                 // everything gets passed through .use
 
+
+app.get('/getSaved', function (req,res) {
+    // setup query & done function here
+    var query = {}
+    var done = function (err,data) {
+        console.log("I just read stuff from the database")
+        res.send(data)
+
+    }
+    database.find(query, done)
+})
 // accept info from client via this post, if someone posts to this section of the site
 // localhost:8080/saveCurrent will go to here
 app.post('/saveCurrent', function(req, res){        // req = info sent from webapp, has ip, time, date, data etc access via dot

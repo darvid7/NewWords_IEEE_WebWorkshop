@@ -15,8 +15,13 @@ myApp.service('HistoryService', function($http){
     this.saveWord = function(newWord){
         var url = baseUrl + "saveCurrent";           // server + save current (address of our post handler)
         return $http.post(url, {"word":newWord})    // send data from website to server
-    }
+    };
     // HistoryService.saveWord(newWord)
+
+    this.getSaved = function() {
+        var url = baseUrl+'getSaved';
+        return $http.get(url)
+    }
 });
 
 
@@ -37,6 +42,16 @@ myApp.controller('MyController', function($scope, HistoryService){
 
     function error(err){
         console.log(err)
+    }
+
+    $scope.words =[];
+    $scope.getSavedWords = function () {
+        HistoryService.getSaved()
+            .then(loadSuccess, error)
+    }
+
+    function loadSuccess (json){
+        $scope.words = json.data
     }
 });
 
