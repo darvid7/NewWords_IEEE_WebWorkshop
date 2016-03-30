@@ -1,7 +1,8 @@
 /**
  * Created by David on 30/03/2016.
  */
-document.write("hello..again! .. I am from Index.js in Client");
+// write out to the html doc
+document.write("Happy word learning through gifs!");
 
 var myApp = angular.module('myApp', []);
 
@@ -24,13 +25,25 @@ myApp.service('HistoryService', function($http){
     }
 });
 
+myApp.service('GifService', function($http){
+    var baseUrl = 'https://api.giphy.com/v1/gifs/';
+    var apiKey = 'dc6zaTOxFJmzC';
+
+    this.getGifs = function(query){
+        var url = baseUrl + "search?q=" + query + "funny&api_key=" + apiKey;
+        return $http.get(url)
+    }
+});
+
 
 
 
 // note we have $scope as it uses the HTML file
-myApp.controller('MyController', function($scope, HistoryService){
+myApp.controller('MyController', function($scope, GifService, HistoryService){
     $scope.newWord = 'cat';
-    
+    $scope.gifUrl = "";
+    $scope.words =[];
+
     $scope.saveThisWord = function () {
         HistoryService.saveWord($scope.newWord)
             .then(saveSuccess, error)
@@ -44,14 +57,29 @@ myApp.controller('MyController', function($scope, HistoryService){
         console.log(err)
     }
 
-    $scope.words =[];
     $scope.getSavedWords = function () {
         HistoryService.getSaved()
             .then(loadSuccess, error)
-    }
+    };
 
     function loadSuccess (json){
         $scope.words = json.data
+    }
+
+    $scope.showGifs = function($event) {
+        GifService.getGifs($event.currentTarget.innerHTML)
+            .then(gifSuccess, error)
+    };
+
+    function gifSuccess(json){
+        console.log("Request for gif")
+        if (json.data.data[0]) {
+            $scope.gifUrl = json.data.data[0].images.fixed_height.url
+            console.log("gif req success")
+        } else {
+            $scope.gifUrl = "http://www.dailyrounds.org/blog/wp-content/uploads/2015/10/i-dont-know.jpg"
+            console.log("gif req can't find")
+        }
     }
 });
 

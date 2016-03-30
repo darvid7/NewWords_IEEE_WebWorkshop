@@ -8,6 +8,7 @@
   },
   "author": "David",
   "license": "ISC",
+
   "dependencies": {
     "angular": "^1.5.3",
     "express": "*"
