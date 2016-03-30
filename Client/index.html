@@ -1,11 +1,22 @@
 <!DOCTYPE html>
-<html lang="en">
+<html ng-app="myApp">
 <head>
+    <meta name='viewport', content="width=device-width, initial-scale=1">
+
+    <link rel="stylesheet" type="text/css" href="style.css">
     <meta charset="UTF-8">
     <title>New Words</title>
 </head>
-<body>
-    Hello World
+<body ng-controller="MyController">
+    <h1>Learn New Words</h1>
+    Hello World <br>
+    New words app <br>:)
+
+    <div>
+        <input ng-model="newWord"> <!-- model means data, now this is accessible to angular/js -->
+    </div>
+    <script src="node_modules/angular/angular.js"></script>
+    <script src="index.js"></script> <!-- better to put script at bottom so everything in your website will load first -->
 
 </body>
 </html>

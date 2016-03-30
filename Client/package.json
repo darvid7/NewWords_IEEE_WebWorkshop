@@ -3,10 +3,13 @@
   "version": "1.0.0",
   "description": "",
   "main": "index.js",
-  "express": "~4.13.1",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "author": "David",
-  "license": "ISC"
+  "license": "ISC",
+  "dependencies": {
+    "angular": "^1.5.3",
+    "express": "*"
+  }
 }
